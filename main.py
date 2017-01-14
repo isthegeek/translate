@@ -30,6 +30,9 @@ def allowed_file(filename):
 def index():
     return render_template('main_input_form.html')
 
+@app.route('/test', methods=['POST'])
+def test():
+    print request.form['someotherparams']
 
 @app.errorhandler(500)
 def server_error(e):
