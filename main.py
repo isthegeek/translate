@@ -32,7 +32,7 @@ def index():
 
 @app.route('/test', methods=['POST'])
 def test():
-    print request.form['someotherparams']
+    print request.form['language']
 
 @app.errorhandler(500)
 def server_error(e):

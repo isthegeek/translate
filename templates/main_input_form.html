@@ -32,7 +32,7 @@
       <div class="jumbotron">
         <h1>Cloud Translate</h1>
         <p>Click on 'record' to start recording and 'stop' to translate the speech to english</p>
-        <select id="speech_demo_record_language" name="speech_demo_record_language">
+        <select id="speech_record_language" name="speech_record_language">
           <option value="af-ZA">Afrikaans (Suid-Afrika)</option>
           <option value="id-ID">Bahasa Indonesia (Indonesia)</option>
           <option value="ms-MY">Bahasa Melayu (Malaysia)</option>
@@ -154,7 +154,7 @@
     recorder && recorder.exportWAV(function(blob) {
       var formdata=new FormData();
       formdata.append("file_to_convert.wav",blob);
-      formdata.append('someotherparams',"hey");//you can append it to formdata with a proper parameter name 
+      formdata.append('language',$("#speech_record_language").val());//you can append it to formdata with a proper parameter name 
 
       $.ajax({
           url : 'http://localhost:5002/test',
