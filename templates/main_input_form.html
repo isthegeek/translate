@@ -150,14 +150,34 @@
       recorder.clear();
     }
 
+function insert(text, translated_text) {
+    var formdata=new FormData();
+    formdata.append('text', text);
+    formdata.append('translated_text', translated_text);
+
+    $.ajax({
+        url : 'http://localhost:5004/insert',
+        dataType : 'json',
+        cache : false,
+        contentType : false,
+        processData : false,
+        data : formdata,
+        type : 'post',
+        success : function(response) {
+          console.log(response);
+        }
+    });
+
+  }
+
   function upload() {
     recorder && recorder.exportWAV(function(blob) {
       var formdata=new FormData();
-      formdata.append("file_to_convert.wav",blob);
+      formdata.append("file_to_convert",blob);
       formdata.append('language',$("#speech_record_language").val());//you can append it to formdata with a proper parameter name 
 
       $.ajax({
-          url : 'http://139.59.35.176:5000/upload',
+          url : 'http://localhost:5004/upload',
           dataType : 'json',
           cache : false,
           contentType : false,
@@ -166,6 +186,7 @@
           type : 'post',
           success : function(response) {
             console.log(response);
+            insert(response.text, response.translated_text);
             $( "#main-window" ).append( "<br><br>--------<p><strong>Original Text:</strong> </p>" + response.text + "<p><strong>Translated Text:</strong> </p>" + response.translated_text );
           }
       });
