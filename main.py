@@ -76,9 +76,9 @@ def retrieve():
     xmldata = dicttoxml(data, custom_root='plivo-translate', attr_type=False)
     parsedData = []
     root = etree.fromstring(xmldata)
-
     for item in root.findall('item'):
-        parsedData.append([ item.find('id').text,item.find('text').text,item.find('translated_text').text, item.find('timestamp').text])
+        original_text = item.find('text').text.encode('utf-8')
+        parsedData.append([ item.find('id').text,original_text,item.find('translated_text').text, item.find('timestamp').text])
     return render_template('history.html', xmldata=xmldata, parsedData=parsedData)
 
 if __name__ == "__main__":
