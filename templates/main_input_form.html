@@ -29,7 +29,7 @@
     <div class="container theme-showcase" role="main">
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
+      <div class="jumbotron" id="main-window">
         <h1>Cloud Translate</h1>
         <p>Click on 'record' to start recording and 'stop' to translate the speech to english</p>
         <select id="speech_record_language" name="speech_record_language">
@@ -113,7 +113,7 @@
           <option value="ar-LB">العربية (لبنان)</option>
           <option value="ar-EG">العربية (مصر)</option>
           <option value="fa-IR">فارسی (ایران)</option>
-          <option value="hi-IN">हिन्दी (भारत)</option>
+          <option value="hi-IN">Hindi (भारत)</option>
           <option value="th-TH">ไทย (ประเทศไทย)</option>
           <option value="ko-KR">한국어 (대한민국)</option>
           <option value="cmn-Hant-TW">國語 (台灣)</option>
@@ -157,14 +157,17 @@
       formdata.append('language',$("#speech_record_language").val());//you can append it to formdata with a proper parameter name 
 
       $.ajax({
-          url : 'http://localhost:5002/test',
+          url : 'http://139.59.35.176:5000/upload',
           dataType : 'json',
           cache : false,
           contentType : false,
           processData : false,
           data : formdata,
           type : 'post',
-          success : function(response) {console.log("I am able to upload")}
+          success : function(response) {
+            console.log(response);
+            $( "#main-window" ).append( "<br><br>--------<p><strong>Original Text:</strong> </p>" + response.text + "<p><strong>Translated Text:</strong> </p>" + response.translated_text );
+          }
       });
     });
   }
@@ -182,7 +185,7 @@
     }
     
     navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
-      alert('No live audio input');
+      console.log('No live audio input');
     });
   };
   </script>
